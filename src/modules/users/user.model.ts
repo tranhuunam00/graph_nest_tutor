@@ -1,4 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 import { Team } from '../teams/team.model';
 
@@ -17,8 +24,8 @@ export class User {
   @Field({ nullable: false })
   lastName: string;
 
-  @ManyToMany(() => Team, team => team.members)
-  @Field(type => [ Team ], { nullable: true })
+  @ManyToMany(() => Team, (team) => team.members)
+  @Field((type) => [Team], { nullable: true })
   teams: Promise<Team[]>;
 
   @CreateDateColumn()

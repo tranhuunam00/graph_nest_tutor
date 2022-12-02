@@ -5,6 +5,9 @@ import { TeamModule } from './modules/teams/team.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { Team } from './modules/teams/team.model';
 import { User } from './modules/users/user.model';
+import { join } from 'path';
+import { AuthorsModule } from './modules/authors/authors.module';
+import { PostsModule } from './modules/posts/posts.module';
 
 @Module({
   imports: [
@@ -12,17 +15,23 @@ import { User } from './modules/users/user.model';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'example',
-      password: 'example',
+      username: 'postgres',
+      password: 'postgres',
       database: 'example',
-      entities: [ Team, User ],
+      entities: [Team, User],
       synchronize: true,
     }),
-    GraphQLModule.forRoot({ autoSchemaFile: true }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: true,
+      typePaths: ['./**/*.graphql'],
+      include: [UserModule, TeamModule],
+    }),
 
     UserModule,
     TeamModule,
+    AuthorsModule,
+    PostsModule,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}

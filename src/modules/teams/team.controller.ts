@@ -1,14 +1,17 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { TeamInput } from './team.model';
 import { TeamService } from './team.service';
 
 @Controller('teams')
 export class TeamController {
-
-  constructor(
-    private readonly teamService: TeamService,
-  ) {
-  }
+  constructor(private readonly teamService: TeamService) {}
 
   @Get()
   async getAllTeams() {
